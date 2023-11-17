@@ -223,7 +223,7 @@ class Game:
         else:
             print('El Alien no puede atacar al Depredador porque no están en posiciones adyacentes.')
 
-    def play(self):
+    def play(self):    #Complejidad: O(n^2)
         n = int(input('Ingrese el tamaño del tablero: '))
         self.create_board(n)
         self.add_symbols(n)
@@ -266,7 +266,7 @@ class Game:
 
 
 
+#COMPLEJIDAD GENERAL DEL ALGORITMO: 9 O(n^2) + 3 O(n) + 2 O(1) 
 
-
-game = Game()   #COMPLEJIDAD GENERAL DEL ALGORITMO: O(n^2)
+game = Game()   
 game.play()
