@@ -9,10 +9,10 @@ class Game:
         self.alien_life = 50
         self.predator_life = 50
 
-    def create_board(self, n):
+    def create_board(self, n): #Complejidad O(n^2)
         self.board = [['_' for _ in range(n)] for _ in range(n)]
 
-    def add_symbols(self, n):
+    def add_symbols(self, n):  #Complejidad O(n^2)
         symbols = ['+'] * n + ['-'] * n
         random.shuffle(symbols)
         for i in range(n):
@@ -20,7 +20,7 @@ class Game:
                 if symbols:
                     self.board[i][j] = symbols.pop()
 
-    def add_predator(self):
+    def add_predator(self):   #Complejidad O(n^2)
         while True:
             row = random.randint(0, len(self.board) - 1)
             col = random.randint(0, len(self.board[0]) - 1)
@@ -29,14 +29,14 @@ class Game:
                 self.predator_pos = (row, col)
                 break
 
-    def print_board(self):
+    def print_board(self):   #Complejidad O(n)
         for row in self.board:
             print(''.join(row))
 
-    def is_valid_cell(self, row, col):
+    def is_valid_cell(self, row, col): #Complejidad O(1)
         return 0 <= row < len(self.board) and 0 <= col < len(self.board[0])
 
-    def get_alien_start_position(self):
+    def get_alien_start_position(self):  #Complejidad O(n^2)
         while True:
             row = int(input('Ingrese la fila donde quiere que el Alien inicie: '))
             col = int(input('Ingrese la columna donde quiere que el Alien inicie: '))
@@ -47,15 +47,15 @@ class Game:
             else:
                 print('Posición inválida o celda no vacía. Intente de nuevo.')
 
-    def set_cell(self, row, col, value):
+    def set_cell(self, row, col, value): #Complejidad O(1)
         if self.is_valid_cell(row, col):
             self.board[row][col] = value
 
-    def get_cell_value(self, row, col):
+    def get_cell_value(self, row, col): #Complejidad O(1)
         if self.is_valid_cell(row, col):
             return self.board[row][col]
 
-    def move_predator(self):
+    def move_predator(self): #Complejidad O(n)
         row, col = self.predator_pos
         possible_moves = [(row - 1, col), (row + 1, col), (row, col - 1), (row, col + 1)]
         valid_moves = [move for move in possible_moves if
@@ -86,7 +86,7 @@ class Game:
             print('El Depredador se movió a una casilla vacía.')
         self.predator_pos = (new_row, new_col)
 
-    def move_alien(self):
+    def move_alien(self): #Complejidad O(n^2)
         while True:
             direction = input(
                 'Ingrese la dirección en la que quiere mover al Alien (arriba, abajo, izquierda, derecha): ')
@@ -129,7 +129,7 @@ class Game:
             else:
                 print('Posición inválida. Intente de nuevo.')
 
-    def attack_predator(self):
+    def attack_predator(self): #Complejidad O(1)
         alien_row, alien_col = self.alien_pos
         predator_row, predator_col = self.predator_pos
         if abs(alien_row - predator_row) <= 1 and abs(alien_col - predator_col) <= 1:
@@ -139,7 +139,7 @@ class Game:
         else:
             print('El Alien no puede atacar al Depredador porque no están en posiciones adyacentes.')
 
-    def play(self):
+    def play(self): #Complejidad O(n^2)
         n = int(input('Ingrese el tamaño del tablero: '))
         self.create_board(n)
         self.add_symbols(n)
@@ -184,6 +184,7 @@ class Game:
             print('Tablero después del turno del Depredador:')
             self.print_board()
 
+#COMPLEJIDAD GENERAL DEL ALGORITMO: 6 O(n^2) + 2 O(n) + 4 O(1) 
 
 game = Game()
 game.play()
