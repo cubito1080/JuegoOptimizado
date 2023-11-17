@@ -2,7 +2,7 @@ import json
 import matplotlib.pyplot as plt
 
 
-with open('memory_usage.json', 'r') as f:
+with open('linked list memory usage.json', 'r') as f:
     data = json.load(f)
 
 

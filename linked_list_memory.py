@@ -450,7 +450,7 @@ class Game:
             print('El Alien no puede atacar al Depredador porque no están en posiciones adyacentes.')
 
     def start_memory_usage(self):
-        with open('memory_usage.json', 'w') as f:
+        with open('linked list memory usage.json', 'w') as f:
             json.dump(self.memory_usage, f)
 
     def play(self):
