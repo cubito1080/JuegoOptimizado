@@ -12,10 +12,6 @@
 
 En este proyecto, presentamos dos versiones de un juego en un tablero donde un Alien y un Depredador interactúan. Ambos personajes pueden moverse, atacarse, obtener vida o perderla con los símbolos presentes en el tablero. El jugador que se quede sin vida primero perderá el juego. La versión no optimizada utiliza listas enlazadas, mientras que la versión optimizada utiliza una matriz simple.
 
-## Gráficas y Análisis
-
-![Mediciones Generales](https://drive.google.com/drive/u/0/folders/1VF7ScZFktinHaR2Y2y-8vbjfLtCnyBYw)
-
 ## Matriz Simple
 
 Una matriz simple es una estructura de datos bidimensional que organiza elementos en filas y columnas, identificados por pares de índices (fila, columna). En el contexto del juego Alien vs Depredador, la matriz simple podría representar eficientemente el tablero del juego, proporcionando acceso rápido a elementos mediante índices.
