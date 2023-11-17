@@ -1,49 +1,37 @@
 import random
 
-
-# O(1)
 class Node:
-    def __init__(self, data):
+    def __init__(self, data): #Complejidad: O(1)
         self.data = data
         self.next = None
 
-
-# o(n)
-class LinkedList:
-    # o(1)
+class LinkedList:             
     def __init__(self):
         self.head = None
 
-    # o(n)
-    def append(self, data):
+    def append(self, data):   #Complejidad: O(n)
         new_node = Node(data)
         if not self.head:
             self.head = new_node
             return
         curr_node = self.head
-        # o(n)
         while curr_node.next:
             curr_node = curr_node.next
         curr_node.next = new_node
 
-
 class Game:
-    # o(1)
-    def __init__(self):
+    def __init__(self): 
         self.board = None
         self.alien_pos = None
         self.predator_pos = None
         self.alien_life = 50
         self.predator_life = 50
 
-    # O(n^2)
-    def print_board(self):
+    def print_board(self):  #Complejidad: O(n^2)
         curr_row = self.board.head
-        # O(n)
         while curr_row:
             curr_node = curr_row.data.head
             row_str = ''
-            # O(n)
             while curr_node:
                 if curr_node.data is None:
                     row_str += '_'
@@ -53,46 +41,30 @@ class Game:
             print(row_str)
             curr_row = curr_row.next
 
-    # O(n^4)
-    def create_board(self, n):
-        # o(n)
+    def create_board(self, n): #Complejidad: O(n^2)
         self.board = LinkedList()
-        # o(n)
         for i in range(n):
-            # o(n)
             row = LinkedList()
-            # O(n)
             for j in range(n):
                 row.append(None)
             self.board.append(row)
 
-    # o(n^5)
-    def add_symbols(self, n):
-        # o(1)
+    def add_symbols(self, n): #Complejidad: O(n^2)
         symbols = ['+'] * n + ['-'] * n
-        # O(n)
         random.shuffle(symbols)
-        # o(n)
         curr_row = self.board.head
-        # o(N)
         while curr_row:
-            # o(n)
             curr_node = curr_row.data.head
-            # o(n)
             while curr_node:
                 if symbols and curr_node.data is None:
                     curr_node.data = symbols.pop()
                 curr_node = curr_node.next
             curr_row = curr_row.next
 
-    # o(n^3)
-    def is_valid_cell(self, row, col):
-        # o(1)
+    def is_valid_cell(self, row, col): #Complejidad: O(n)
         if row < 0 or col < 0:
             return False
-        # o(n)
         curr_row = self.board.head
-        # O(n)
         for _ in range(row):
             if not curr_row:
                 return False
@@ -100,16 +72,13 @@ class Game:
         if not curr_row:
             return False
         curr_node = curr_row.data.head
-        # o(n)
         for _ in range(col):
             if not curr_node:
                 return False
             curr_node = curr_node.next
         return curr_node is not None
 
-    # o(N)
-    def get_alien_start_position(self):
-        # o(n)
+    def get_alien_start_position(self): # Complejidad: O(n^2) 
         while True:
             row = int(input('Ingrese la fila donde quiere que el Alien inicie: '))
             col = int(input('Ingrese la columna donde quiere que el Alien inicie: '))
@@ -120,17 +89,13 @@ class Game:
             else:
                 print('Posición inválida. Intente de nuevo.')
 
-    # O(n^3)
-    def add_predator(self):
+    def add_predator(self): #Complejidad: O(n^2)
         empty_cells = []
-        # O(n)
         curr_row = self.board.head
         row_index = 0
-        # O(N)
         while curr_row:
             curr_node = curr_row.data.head
             col_index = 0
-            # O(n)
             while curr_node:
                 if curr_node.data is None:
                     empty_cells.append((row_index, col_index))
@@ -143,11 +108,8 @@ class Game:
             self.set_cell(row, col, '\U0001F916')
             self.predator_pos = (row, col)
 
-    # O(n^3)
-    def set_cell(self, row, col, value):
-        # O(n)
+    def set_cell(self, row, col, value): #Complejidad: O(n^2)
         curr_row = self.board.head
-        # O(n)
         for _ in range(row):
             if not curr_row:
                 return False
@@ -155,7 +117,6 @@ class Game:
         if not curr_row:
             return False
         curr_node = curr_row.data.head
-        # O(n)
         for _ in range(col):
             if not curr_node:
                 return False
@@ -164,11 +125,8 @@ class Game:
             return False
         curr_node.data = value
 
-    # O(n^3)
-    def get_cell_value(self, row, col):
-        # O(n)
+    def get_cell_value(self, row, col): #Complejidad: O(n^2)
         curr_row = self.board.head
-        # O(n)
         for _ in range(row):
             if not curr_row:
                 return None
@@ -176,7 +134,6 @@ class Game:
         if not curr_row:
             return None
         curr_node = curr_row.data.head
-        # O(n)
         for _ in range(col):
             if not curr_node:
                 return None
@@ -185,49 +142,38 @@ class Game:
             return None
         return curr_node.data
 
-    # o(n^3)
-    def move_predator(self):
+    def move_predator(self):    #Complejidad: O(n) 
         row, col = self.predator_pos
-        possible_moves = [(row - 1, col), (row + 1, col), (row, col - 1), (row, col + 1)]
-        # o(n^2)
+        possible_moves = [(row-1, col), (row+1, col), (row, col-1), (row, col+1)]
         valid_moves = [move for move in possible_moves if self.is_valid_cell(move[0], move[1])]
         if not valid_moves:
             return
-        # O(n)
         new_row, new_col = random.choice(valid_moves)
-        # O(n^3)
         self.set_cell(self.predator_pos[0], self.predator_pos[1], None)
         cell_value = self.get_cell_value(new_row, new_col)
         if cell_value == '+':
             self.predator_life += 10
-            # O(n^3)
             self.set_cell(new_row, new_col, '\U0001F916')
             print('El Depredador se movió a una casilla con un "+". Su vida aumentó a', self.predator_life)
 
         elif cell_value == '-':
             self.predator_life -= 10
-            # O(n^3)
             self.set_cell(new_row, new_col, '\U0001F916')
             print('El Depredador se movió a una casilla con un "-". Su vida disminuyó a', self.predator_life)
 
         elif cell_value == '\U0001F47D':
             self.alien_life -= 25
-            # O(n^3)
             self.set_cell(new_row, new_col, '\U0001F916')
-            print('El Depredador se movió a la casilla donde está el Alien. La vida del Alien disminuyó a',
-                  self.alien_life)
+            print('El Depredador se movió a la casilla donde está el Alien. La vida del Alien disminuyó a', self.alien_life)
 
         else:
-            # O(n^3)
             self.set_cell(new_row, new_col, '\U0001F916')
             print('El Depredador se movió a una casilla vacía.')
         self.predator_pos = (new_row, new_col)
 
-    # o(n^3)
-    def move_alien(self):
+    def move_alien(self): #Complejidad: O(n^2) 
         while True:
-            direction = input(
-                'Ingrese la dirección en la que quiere mover al Alien (arriba, abajo, izquierda, derecha): ')
+            direction = input('Ingrese la dirección en la que quiere mover al Alien (arriba, abajo, izquierda, derecha): ')
             new_row, new_col = self.alien_pos
             if direction == 'arriba':
                 new_row -= 1
@@ -240,9 +186,7 @@ class Game:
             else:
                 print('Dirección inválida. Intente de nuevo.')
                 continue
-            #o(n^3)
             if self.is_valid_cell(new_row, new_col):
-                # o(n^3)
                 self.set_cell(self.alien_pos[0], self.alien_pos[1], None)
                 cell_value = self.get_cell_value(new_row, new_col)
                 if cell_value == '+':
@@ -252,19 +196,15 @@ class Game:
 
                 elif cell_value == '-':
                     self.alien_life -= 10
-                    # o(n^3)
                     self.set_cell(new_row, new_col, '\U0001F47D')
                     print('El Alien se movió a una casilla con un "-". Su vida disminuyó a', self.alien_life)
 
                 elif cell_value == '\U0001F916':
                     self.alien_life -= 25
-                    # o(n^3)
                     self.set_cell(new_row, new_col, '\U0001F47D')
-                    print('El Alien se movió a la casilla donde está el Depredador. Su vida disminuyó a',
-                          self.alien_life)
+                    print('El Alien se movió a la casilla donde está el Depredador. Su vida disminuyó a', self.alien_life)
 
                 else:
-                    # o(n^3)
                     self.set_cell(new_row, new_col, '\U0001F47D')
                     print('El Alien se movió a una casilla vacía.')
                 self.alien_pos = (new_row, new_col)
@@ -272,8 +212,8 @@ class Game:
             else:
                 print('Posición inválida. Intente de nuevo.')
 
-    #O(1)
-    def attack_predator(self):
+
+    def attack_predator(self): #Complejidad: O(1)
         alien_row, alien_col = self.alien_pos
         predator_row, predator_col = self.predator_pos
         if abs(alien_row - predator_row) <= 1 and abs(alien_col - predator_col) <= 1:
@@ -283,7 +223,7 @@ class Game:
         else:
             print('El Alien no puede atacar al Depredador porque no están en posiciones adyacentes.')
 
-    def play(self):
+    def play(self):    #Complejidad: O(n^2)
         n = int(input('Ingrese el tamaño del tablero: '))
         self.create_board(n)
         self.add_symbols(n)
@@ -325,5 +265,8 @@ class Game:
             self.print_board()
 
 
-game = Game()
+
+#COMPLEJIDAD GENERAL DEL ALGORITMO: 9 O(n^2) + 3 O(n) + 2 O(1) 
+
+game = Game()   
 game.play()
