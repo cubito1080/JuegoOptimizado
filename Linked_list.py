@@ -212,6 +212,17 @@ class Game:
             else:
                 print('Posición inválida. Intente de nuevo.')
 
+
+    def attack_predator(self):
+        alien_row, alien_col = self.alien_pos
+        predator_row, predator_col = self.predator_pos
+        if abs(alien_row - predator_row) <= 1 and abs(alien_col - predator_col) <= 1:
+            # El Alien y el Depredador están en posiciones adyacentes
+            self.predator_life -= 10  # El Alien ataca al Depredador
+            print('El Alien atacó al Depredador. La vida del Depredador disminuyó a', self.predator_life)
+        else:
+            print('El Alien no puede atacar al Depredador porque no están en posiciones adyacentes.')
+
     def play(self):
         n = int(input('Ingrese el tamaño del tablero: '))
         self.create_board(n)
@@ -256,6 +267,6 @@ class Game:
 
 
 
-    
+
 game = Game()
 game.play()

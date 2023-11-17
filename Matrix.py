@@ -1,5 +1,6 @@
 import random
 
+
 class Game:
     def __init__(self):
         self.board = []
@@ -56,8 +57,9 @@ class Game:
 
     def move_predator(self):
         row, col = self.predator_pos
-        possible_moves = [(row-1, col), (row+1, col), (row, col-1), (row, col+1)]
-        valid_moves = [move for move in possible_moves if self.is_valid_cell(move[0], move[1]) and self.board[move[0]][move[1]] == '_']
+        possible_moves = [(row - 1, col), (row + 1, col), (row, col - 1), (row, col + 1)]
+        valid_moves = [move for move in possible_moves if
+                       self.is_valid_cell(move[0], move[1]) and self.board[move[0]][move[1]] == '_']
         if not valid_moves:
             return
         new_row, new_col = random.choice(valid_moves)
@@ -76,7 +78,8 @@ class Game:
         elif cell_value == '\U0001F47D':
             self.alien_life -= 25
             self.board[new_row][new_col] = '\U0001F916'
-            print('El Depredador se movió a la casilla donde está el Alien. La vida del Alien disminuyó a', self.alien_life)
+            print('El Depredador se movió a la casilla donde está el Alien. La vida del Alien disminuyó a',
+                  self.alien_life)
 
         else:
             self.board[new_row][new_col] = '\U0001F916'
@@ -85,7 +88,8 @@ class Game:
 
     def move_alien(self):
         while True:
-            direction = input('Ingrese la dirección en la que quiere mover al Alien (arriba, abajo, izquierda, derecha): ')
+            direction = input(
+                'Ingrese la dirección en la que quiere mover al Alien (arriba, abajo, izquierda, derecha): ')
             new_row, new_col = self.alien_pos
             if direction == 'arriba':
                 new_row -= 1
@@ -114,7 +118,8 @@ class Game:
                 elif cell_value == '\U0001F916':
                     self.alien_life -= 25
                     self.board[new_row][new_col] = '\U0001F47D'
-                    print('El Alien se movió a la casilla donde está el Depredador. La vida del Alien disminuyó a', self.alien_life)
+                    print('El Alien se movió a la casilla donde está el Depredador. La vida del Alien disminuyó a',
+                          self.alien_life)
 
                 else:
                     self.board[new_row][new_col] = '\U0001F47D'
@@ -123,6 +128,16 @@ class Game:
                 return
             else:
                 print('Posición inválida. Intente de nuevo.')
+
+    def attack_predator(self):
+        alien_row, alien_col = self.alien_pos
+        predator_row, predator_col = self.predator_pos
+        if abs(alien_row - predator_row) <= 1 and abs(alien_col - predator_col) <= 1:
+            # El Alien y el Depredador están en posiciones adyacentes
+            self.predator_life -= 10  # El Alien ataca al Depredador
+            print('El Alien atacó al Depredador. La vida del Depredador disminuyó a', self.predator_life)
+        else:
+            print('El Alien no puede atacar al Depredador porque no están en posiciones adyacentes.')
 
     def play(self):
         n = int(input('Ingrese el tamaño del tablero: '))
@@ -138,32 +153,37 @@ class Game:
             print('Vida del Depredador:', self.predator_life)
             if self.alien_life <= 0:
                 print('El Depredador ganó!')
+
                 return
             elif self.predator_life <= 0:
                 print('El Alien ganó!')
+
                 return
             action = input('Ingrese la acción que quiere realizar el Alien (moverse o atacar): ')
             if action == 'moverse':
                 self.move_alien()
-                print('Tablero después del turno del Alien:')
-                self.print_board()
             elif action == 'atacar':
                 self.attack_predator()
             else:
                 print('Acción inválida. Intente de nuevo.')
                 continue
+            print('Tablero después del turno del Alien:')
+            self.print_board()
             print('Turno del Depredador:')
             print('Vida del Alien:', self.alien_life)
             print('Vida del Depredador:', self.predator_life)
             if self.alien_life <= 0:
                 print('El Depredador ganó!')
+
                 return
             elif self.predator_life <= 0:
                 print('El Alien ganó!')
+
                 return
             self.move_predator()
             print('Tablero después del turno del Depredador:')
             self.print_board()
+
 
 game = Game()
 game.play()
