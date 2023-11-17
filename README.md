@@ -13,6 +13,7 @@
 En este proyecto, presentamos dos versiones de un juego en un tablero donde un Alien y un Depredador interactúan. Ambos personajes pueden moverse, atacarse, obtener vida o perderla con los símbolos presentes en el tablero. El jugador que se quede sin vida primero perderá el juego. La versión no optimizada utiliza listas enlazadas, mientras que la versión optimizada utiliza una matriz simple.
 
 ## Gráficas y Análisis
+![Mediciones Generales](https://drive.google.com/drive/u/0/folders/1VF7ScZFktinHaR2Y2y-8vbjfLtCnyBYw)
 
 ## Matriz Simple
 
